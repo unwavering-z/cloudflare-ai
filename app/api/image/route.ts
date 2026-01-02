@@ -1,5 +1,5 @@
 import type { Model } from "@/lib/models";
-
+export const runtime = 'edge';
 interface Data {
   prompt: string;
   model: Model["id"];
