@@ -1,8 +1,15 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from "next/server";
 
-// 函数名必须改为 proxy 才能匹配文件名 proxy.ts
 export function proxy(request: NextRequest) {
-  return NextResponse.next();
+  if (!process.env.APP_PASSWORD) {
+    return NextResponse.next();
+  }
+  const password = request.headers.get("Authorization");
+  if (password !== process.env.APP_PASSWORD) {
+    return new Response("Unauthorized", { status: 401 });
+  }
 }
 
+export const config = {
+  matcher: "/api/:path*",
+};
