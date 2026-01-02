@@ -1,4 +1,5 @@
 import type { LanguageModelV2 } from "@ai-sdk/provider";
+export const runtime = 'edge';
 import {
   convertToModelMessages,
   extractReasoningMiddleware,
