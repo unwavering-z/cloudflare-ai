@@ -1,6 +1,6 @@
-export const runtime = 'edge';
-"use client";
 
+"use client";
+export const runtime = 'edge';
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, generateId } from "ai";
 import { useLiveQuery } from "dexie-react-hooks";
