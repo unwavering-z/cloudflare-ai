@@ -59,6 +59,5 @@ docker run -d --name cloudflare-ai-web \
 
 多个提供者使用逗号分隔
 
-## 赞助
 
-[Click Me](https://jaze.top/sponsor)
+//HEAD is now at ba33eaf Initial commit
