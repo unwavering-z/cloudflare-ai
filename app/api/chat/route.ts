@@ -1,5 +1,5 @@
 import type { LanguageModelV2 } from "@ai-sdk/provider";
-export const runtime = 'edge';
+
 import {
   convertToModelMessages,
   extractReasoningMiddleware,
@@ -17,7 +17,7 @@ interface Data {
   provider: Model["provider"];
   search?: boolean;
 }
-
+export const runtime = 'edge';
 export async function POST(request: Request) {
   const { messages, model, provider, search } = (await request.json()) as Data;
 
