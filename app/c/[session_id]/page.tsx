@@ -1,11 +1,12 @@
-
 "use client";
+
 export const runtime = 'edge';
+
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, generateId } from "ai";
 import { useLiveQuery } from "dexie-react-hooks";
 import { ChevronDown } from "lucide-react";
-import { debounce } from "next/dist/server/utils";
+// ❌ 删除了 import { debounce } from "next/dist/server/utils";
 import { useParams, useSearchParams } from "next/navigation";
 import {
   startTransition,
@@ -24,6 +25,15 @@ import { Button } from "@/components/ui/button";
 import { db, type Message } from "@/lib/db";
 import { models } from "@/lib/models";
 import { getStoredModel } from "@/lib/utils";
+
+// 自定义简易 debounce 函数，不依赖任何外部库，体积几乎为 0
+function debounce<T extends (...args: any[]) => void>(fn: T, delay: number) {
+  let timer: ReturnType<typeof setTimeout>;
+  return (...args: Parameters<T>) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+}
 
 const Page = () => {
   const { session_id } = useParams() as { session_id: string };
