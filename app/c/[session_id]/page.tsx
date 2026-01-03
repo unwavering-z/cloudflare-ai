@@ -7,7 +7,7 @@ import { DefaultChatTransport, generateId } from "ai";
 import { useLiveQuery } from "dexie-react-hooks";
 import { ChevronDown } from "lucide-react";
 import { useParams, useSearchParams } from "next/navigation";
-import dynamic from "next/dynamic"; // 引入动态导入
+import dynamic from "next/dynamic";
 import {
   startTransition,
   useCallback,
@@ -17,18 +17,17 @@ import {
   ViewTransition,
 } from "react";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button"; // 补回这行导入
 import { db, type Message } from "@/lib/db";
 import { models } from "@/lib/models";
 import { getStoredModel } from "@/lib/utils";
 
-// --- 核心修改：强制动态导入 UI 组件，禁用 SSR ---
-// 这样这些组件的代码就不会被打包进 Cloudflare Worker (Edge Function)
+// 动态导入 UI 组件，禁用 SSR 以剥离代码体积
 const ChatList = dynamic(() => import("@/components/chat-list"), { ssr: false });
 const ChatInput = dynamic(() => import("@/components/chat-input"), { ssr: false });
 const AuthDialog = dynamic(() => import("@/components/auth-dialog"), { ssr: false });
 const Footer = dynamic(() => import("@/components/footer"), { ssr: false });
 
-// 之前定义的简易 debounce
 function debounce<T extends (...args: any[]) => void>(fn: T, delay: number) {
   let timer: ReturnType<typeof setTimeout>;
   return (...args: Parameters<T>) => {
